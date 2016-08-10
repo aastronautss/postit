@@ -52,7 +52,13 @@ class PostsController < ApplicationController
         redirect_to :back
       end
 
-      format.js
+      format.js do
+        if @vote.valid?
+          flash.now[:notice] = 'Your vote was counted.'
+        else
+          flash.now[:error] = 'You can only vote on a post once.'
+        end
+      end
     end
   end
 
