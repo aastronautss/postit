@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_comment
+  before_action :set_comment, except: [:create]
   before_action :set_post, only: [:create]
 
   def create
@@ -17,13 +17,25 @@ class CommentsController < ApplicationController
   def vote
     vote = Vote.create voteable: @comment, creator: current_user, vote: params[:vote]
 
-    if vote.valid?
-      flash[:notice] = 'Your vote has been counted.'
-    else
-      flash[:error] = 'You can only vote on a comment once.'
-    end
+    respond_to do |format|
+      format.html do
+        if vote.valid?
+          flash[:notice] = 'Your vote has been counted.'
+        else
+          flash[:error] = 'You can only vote on a comment once.'
+        end
 
-    redirect_to :back
+        redirect_to :back
+      end
+
+      format.js do
+        if vote.valid?
+          flash.now[:notice] = 'Your vote has been counted.'
+        else
+          flash.now[:error] = 'You can only vote on a comment once.'
+        end
+      end
+    end
   end
 
   private
