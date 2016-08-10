@@ -7,7 +7,7 @@
     <% end %>
 
     <br />
-    <span id='post_<%= post.id %>_vote'><%= post.vote_count %> votes</span>
+    <span id='post_<%= post.slug %>_vote'><%= post.vote_count %> votes</span>
     <br />
 
     <% if logged_in? %>

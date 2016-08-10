@@ -1,2 +1,2 @@
-$('#post_<%= @post.id %>_vote').html('<%= @post.vote_count %> votes');
+$('#post_<%= @post.slug %>_vote').html('<%= @post.vote_count %> votes');
 <%= ajax_flash '#flash-div' %>
