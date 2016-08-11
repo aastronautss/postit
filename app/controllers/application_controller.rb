@@ -14,23 +14,23 @@ class ApplicationController < ActionController::Base
   end
 
   def require_user
-    if !logged_in?
-      flash[:error] = 'You must be logged in to do that.'
-      redirect_to root_path
-    end
+    access_denied('You must be logged in to do that.') unless logged_in?
   end
 
   def require_logged_out
-    if logged_in?
-      flash[:error] = 'You must be logged out to do that.'
-      redirect_to root_path
-    end
+    access_denied('You must be logged out to do that.') if logged_in?
   end
 
   def require_logged_in_as(user)
-    if current_user != user
-      flash[:error] = "You aren't allowed to do that."
-      redirect_to root_path
-    end
+    access_denied unless current_user = user
+  end
+
+  def require_admin
+    access_denied unless logged_in? && current_user.admin?
+  end
+
+  def access_denied(msg = "You aren't allowed to do that.")
+    flash[:error] = "You aren't allowed to do that."
+    redirect_to root_path
   end
 end
