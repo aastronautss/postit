@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
                        length:      { minimum: 5 },
                        on:          :create
 
-  before_save :generate_slug
+  before_create :generate_slug
 
   def to_param
     self.slug

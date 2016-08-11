@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
   before_action :require_logged_out, only: [:new, :create]
-  before_action -> { require_logged_in_as User.find(params[:id]) },
+  before_action -> { require_logged_in_as User.find_by(slug: params[:id]) },
     only: [:edit, :update]
 
   def show
