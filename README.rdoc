@@ -1,3 +1,7 @@
+= Postit!
+
+A web application for posting articles and talking about them.
+
 == Getting Started
 
 1. Make sure you have rails version 4. Type "rails -v" to make sure.
